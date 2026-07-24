@@ -24,11 +24,6 @@ jobs:
     - name: Build
       run: cmake --build build --config Release
 
-    - name: Show build folder
-      shell: cmd
-      run: |
-        dir build /s
-
     - name: List executable files
       shell: cmd
       run: |
@@ -37,5 +32,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: SimCore
-        path: build/examples/console/console_demo.exe
+        name: SimCore-Windows
+        path: build/Release/console_demo.exe
