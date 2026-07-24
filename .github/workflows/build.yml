@@ -29,6 +29,11 @@ jobs:
       run: |
         dir build /s
 
+    - name: List executable files
+      shell: cmd
+      run: |
+         dir build\*.exe /s
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
