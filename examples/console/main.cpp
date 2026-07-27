@@ -16,4 +16,6 @@ int main()
     }
 
     sim.Shutdown();
+
+    return 0;
 }
