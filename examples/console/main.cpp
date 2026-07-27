@@ -10,11 +10,16 @@ int main()
 
     constexpr float dt = 0.1f;
 
-    while (true)
+    /*while (true)
     {
         simulation.Update(dt);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }*/
+
+    // 10 update simulations
+    for (int i = 0; i < 10; ++i) {
+        simulation.Update(0.1f);
     }
 
     return 0;
