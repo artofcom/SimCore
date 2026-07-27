@@ -25,7 +25,7 @@ jobs:
       - name: Show Build Directory
         shell: cmd
         run: |
-           dir build /s
+           dir build\Release /s
 
       - name: Run Tests
         working-directory: build
