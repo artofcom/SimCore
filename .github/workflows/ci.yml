@@ -9,30 +9,14 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
 
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configure
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Build Docker Image
+        run: docker build -t simcore .
 
-      - name: Build
-        run: cmake --build build --config Release
-
-      - name: Show Build Directory
-        shell: cmd
-        run: |
-           dir build\Release /s
-
-      - name: Run Tests
-        working-directory: build
-        run: ctest -C Release --output-on-failure
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: SimCore-Windows
-          path: build/Release/console_demo.exe
+      - name: Run Tests in Docker
+        run: docker run --rm simcore
