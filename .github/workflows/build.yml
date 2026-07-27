@@ -35,4 +35,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SimCore-Windows
-          path: build/console_demo.exe
+          path: build/Release/console_demo.exe
