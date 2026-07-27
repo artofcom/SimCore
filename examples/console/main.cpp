@@ -6,21 +6,14 @@
 
 int main()
 {
-    Simulation simulation;
+    Simulation sim;
 
-    constexpr float dt = 0.1f;
+    sim.Initialize();
 
-    /*while (true)
+    for (int i = 0; i < 5; i++)
     {
-        simulation.Update(dt);
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }*/
-
-    // 10 update simulations
-    for (int i = 0; i < 10; ++i) {
-        simulation.Update(0.1f);
+        sim.Update(1.0f);
     }
 
-    return 0;
+    sim.Shutdown();
 }
