@@ -2,9 +2,7 @@ name: SimCore CI
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
 
   pull_request:
 
@@ -15,22 +13,26 @@ jobs:
 
     steps:
 
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Configure
-      run: cmake -S . -B build
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
-    - name: Build
-      run: cmake --build build --config Release
+      - name: Build
+        run: cmake --build build --config Release
 
-    - name: List executable files
-      shell: cmd
-      run: |
-         dir build\*.exe /s
+      - name: Show Build Directory
+        shell: cmd
+        run: |
+           dir build /s
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: SimCore-Windows
-        path: build/Release/console_demo.exe
+      - name: Run Tests
+        working-directory: build
+        run: ctest -C Release --output-on-failure
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SimCore-Windows
+          path: build/console_demo.exe
