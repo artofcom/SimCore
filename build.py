@@ -17,7 +17,7 @@ def run(command):
     result = subprocess.run(command, shell=True)
 
     if result.returncode != 0:
-        print("\n❌ FAILED")
+        print("\n FAILED")
         sys.exit(result.returncode)
 
 
@@ -86,10 +86,10 @@ def check_format():
             failed = True
 
     if failed:
-        print("\n❌ Formatting check failed.")
+        print("\n[FAILED] Formatting check failed.")
         sys.exit(1)
 
-    print("\n✅ Formatting check passed.")
+    print("\n[PASS] Formatting check passed.")
 
 
 
