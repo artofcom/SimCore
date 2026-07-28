@@ -21,6 +21,20 @@ def run(command):
         sys.exit(result.returncode)
 
 
+def source_files():
+    extensions = {".cpp", ".h", ".hpp"}
+
+    for file in Path(".").rglob("*"):
+
+        if any(part in SKIP_DIRS for part in file.parts):
+            continue
+
+        if file.suffix not in extensions:
+            continue
+
+        yield file
+
+
 def build():
     print("\n========== BUILD ==========")
 
@@ -42,17 +56,9 @@ def docker():
 def format():
     print("\n========== FORMAT ==========")
 
-    extensions = {".cpp", ".h", ".hpp"}
     formatted = 0
 
-    for file in Path(".").rglob("*"):
-
-        if any(part in SKIP_DIRS for part in file.parts):
-            continue
-
-        if file.suffix not in extensions:
-            continue
-
+    for file in source_files():
         print(f"Formatting: {file}")
         run(f'clang-format -i "{file}"')
         formatted += 1
@@ -63,17 +69,9 @@ def format():
 def check_format():
     print("\n========== FORMAT CHECK ==========")
 
-    extensions = {".cpp", ".h", ".hpp"}
-
     failed = False
 
-    for file in Path(".").rglob("*"):
-
-        if any(part in SKIP_DIRS for part in file.parts):
-            continue
-
-        if file.suffix not in extensions:
-            continue
+    for file in source_files():
 
         result = subprocess.run(
             [
