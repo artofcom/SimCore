@@ -1,5 +1,5 @@
 #include "Simulation.h"
-#include <iostream>
+#include <spdlog/spdlog.h>
 
 Simulation::Simulation() : m_tick(0) {}
 
@@ -9,15 +9,21 @@ void Simulation::Update(float dt)
 {
     ++m_tick;
 
-    std::cout << "[INFO] Tick : " << m_tick << " dt : " << dt << std::endl;
+     spdlog::info("Tick: {}, dt: {}", m_tick, dt);
 
     if (m_tick == 1)
-        std::cout << "[INFO] Robot Task Started\n";
+         spdlog::info("[INFO] Robot Task Started\n");
 
     if (m_tick == 3)
-        std::cout << "[INFO] Robot Task Completed\n";
+         spdlog::info("[INFO] Robot Task Completed\n");
 }
 
-void Simulation::Initialize() {}
+void Simulation::Initialize() 
+{
+    spdlog::info("Simulation initialized.");
+}
 
-void Simulation::Shutdown() {}
+void Simulation::Shutdown()
+{
+    spdlog::info("Simulation shutdown.");
+}

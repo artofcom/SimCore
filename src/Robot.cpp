@@ -1,6 +1,6 @@
 #include "Robot.h"
 #include <cmath>
-#include <iostream>
+#include <spdlog/spdlog.h>
 
 // M_PI definition (when M_PI is not defined)
 #ifndef M_PI
@@ -16,8 +16,7 @@ void Robot::moveForward(double distance)
     x_ += distance * cos(angle_);
     y_ += distance * sin(angle_);
 
-    std::cout << "Robot moved " << distance << " units forward. New position: (" << x_ << ", " << y_
-              << ")" << std::endl;
+    spdlog::info("Robot moved : {}, units forward. New position: ({}, {})", distance, x_, y_);
 }
 
 std::pair<double, double> Robot::getPosition() const
@@ -27,7 +26,7 @@ std::pair<double, double> Robot::getPosition() const
 
 void Robot::printStatus() const
 {
-    std::cout << "Robot position: (" << x_ << ", " << y_ << ")" << std::endl;
+    spdlog::info("Robot position: ({}, {})", x_, y_);
 }
 
 void Robot::update(float dt)
@@ -36,8 +35,8 @@ void Robot::update(float dt)
     x_ += speed_ * cos(angle_) * dt;
     y_ += speed_ * sin(angle_) * dt;
 
-    std::cout << "Robot update (dt: " << dt << ")" << std::endl;
-    std::cout << "New position: (" << x_ << ", " << y_ << ")" << std::endl;
+    spdlog::info("Robot update (dt: {})", dt);
+    spdlog::info("New position: ({}, {})", x_, y_);
 }
 
 // Set methods implementation
@@ -51,15 +50,14 @@ void Robot::turn(double angle)
 {
     angle_ += angle;
 
-    std::cout << "Robot turned by " << angle << " radians. New angle: " << angle_ << std::endl;
+    spdlog::info("Robot turned by {} radians. New angle : {}", angle, angle_);
 }
 
 // Set the robot's angle directly (in radians)
 void Robot::setAngle(double angle)
 {
     angle_ = angle;
-
-    std::cout << "Robot angle set to " << angle << " radians" << std::endl;
+    spdlog::info("Robot angle set to {} radians", angle);
 }
 
 // Get the current angle
@@ -73,8 +71,7 @@ void Robot::scale(double factor)
 {
     x_ *= factor;
     y_ *= factor;
-    std::cout << "Robot scaled by " << factor << ". New position: (" << x_ << ", " << y_ << ")"
-              << std::endl;
+    spdlog::info("Robot scaled by {}, New position({}, {})", factor, x_, y_);
 }
 
 // Rotate function implementation
@@ -87,6 +84,5 @@ void Robot::rotate(double angle)
     x_ = newX;
     y_ = newY;
 
-    std::cout << "Robot rotated by " << angle << " radians around origin."
-              << " New position: (" << x_ << ", " << y_ << ")" << std::endl;
+    spdlog::info("Robot rotated by {} radians around origin., New position({}, {})", angle, x_, y_);
 }
