@@ -15,6 +15,9 @@ jobs:
 
       - uses: actions/checkout@v4
 
+      - name: Show clang-format version
+        run: clang-format --version
+
       - name: Format Check
         run: python build.py --check-format
 
