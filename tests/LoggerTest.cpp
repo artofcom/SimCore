@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include "../include/Simulation.h"
+#include <gtest/gtest.h>
 
 TEST(MathTest, Add)
 {

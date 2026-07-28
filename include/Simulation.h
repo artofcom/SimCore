@@ -1,14 +1,15 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
-class Simulation {
-private:
+class Simulation
+{
+  private:
     int m_tick;
 
-public:
+  public:
     Simulation();
     ~Simulation();
-    
+
     void Initialize();
 
     void Update(float dt);

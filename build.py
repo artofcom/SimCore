@@ -31,6 +31,14 @@ def docker():
     run("docker build --no-cache -t simcore .")
     run("docker run --rm simcore")
 
+def format():
+    print("\n========== FORMAT ==========")
+
+    run("clang-format -i src/*.cpp")
+    run("clang-format -i include/*.h")
+    run("clang-format -i tests/*.cpp")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="SimCore Build Tool"
@@ -60,6 +68,12 @@ def main():
         help="Run build, test and docker",
     )
 
+    parser.add_argument(
+        "--format",
+        action="store_true",
+        help="Format source code",
+    )
+
     args = parser.parse_args()
 
     print("==============================")
@@ -79,6 +93,9 @@ def main():
         build()
         test()
         docker()
+
+    elif args.format:
+        format()
 
     else:
         parser.print_help()
