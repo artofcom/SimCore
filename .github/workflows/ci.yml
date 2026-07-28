@@ -7,24 +7,26 @@ on:
   pull_request:
 
 jobs:
-  build:
 
-    runs-on: ubuntu-latest
+  quality:
+
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
-
-      # Install LLVM 22
-      - name: Install LLVM
-        uses: KyleMayes/install-llvm-action@v2
-        with:
-          version: "22"
 
       - name: Show clang-format version
         run: clang-format --version
 
       - name: Format Check
         run: python build.py --check-format
+
+  docker:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Build Docker Image
         run: docker build -t simcore .
