@@ -27,7 +27,8 @@ def test():
 def docker():
     print("\n========== DOCKER ==========")
 
-    run("docker build -t simcore .")
+    ## run("docker build -t simcore .")
+    run("docker build --no-cache -t simcore .")
     run("docker run --rm simcore")
 
 def main():
