@@ -1,0 +1,10 @@
+{
+  "simulation": {
+    "tickRate": 60,
+    "logLevel": "info"
+  },
+
+  "robot": {
+    "speed": 2.5
+  }
+}

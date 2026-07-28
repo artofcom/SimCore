@@ -1,5 +1,6 @@
 #include "Simulation.h"
 #include <spdlog/spdlog.h>
+#include "config.h"
 
 Simulation::Simulation() : m_tick(0) {}
 
@@ -21,6 +22,10 @@ void Simulation::Update(float dt)
 void Simulation::Initialize() 
 {
     spdlog::info("Simulation initialized.");
+
+    Config::Instance().Load("config/config.json");
+
+    spdlog::info("Robot speed: {}", Config::Instance().robot.speed);
 }
 
 void Simulation::Shutdown()

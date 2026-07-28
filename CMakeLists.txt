@@ -18,13 +18,20 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(spdlog)
 
+FetchContent_Declare(
+    json
+    GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG v3.12.0
+)
+
+FetchContent_MakeAvailable(json)
 
 # -----------------------------
 # Library
 # -----------------------------
 add_library(simcore
     src/Simulation.cpp
-)
+ "include/config.h" "src/config.cpp")
 
 target_include_directories(simcore
     PUBLIC
@@ -34,19 +41,26 @@ target_include_directories(simcore
 target_link_libraries(simcore
     PUBLIC
         spdlog::spdlog
+        nlohmann_json::nlohmann_json
 )
-
 
 # -----------------------------
 # Console Example
 # -----------------------------
 add_executable(console_demo
     examples/console/main.cpp
-)
+ "include/config.h" "src/config.cpp")
 
 target_link_libraries(console_demo
     PRIVATE
         simcore
+)
+
+# Copy config folder next to executable
+add_custom_command(TARGET console_demo POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/config
+        $<TARGET_FILE_DIR:console_demo>/config
 )
 
 # -----------------------------
