@@ -1,7 +1,15 @@
 ﻿import argparse
 import subprocess
 import sys
+from pathlib import Path
 
+SKIP_DIRS = {
+    ".git",
+    ".vs",
+    ".vscode",
+    "build",
+    "out",
+}
 
 def run(command):
     print(f"\n>>> {command}")
@@ -34,9 +42,57 @@ def docker():
 def format():
     print("\n========== FORMAT ==========")
 
-    run("clang-format -i src/*.cpp")
-    run("clang-format -i include/*.h")
-    run("clang-format -i tests/*.cpp")
+    extensions = {".cpp", ".h", ".hpp"}
+    formatted = 0
+
+    for file in Path(".").rglob("*"):
+
+        if any(part in SKIP_DIRS for part in file.parts):
+            continue
+
+        if file.suffix not in extensions:
+            continue
+
+        print(f"Formatting: {file}")
+        run(f'clang-format -i "{file}"')
+        formatted += 1
+
+    print(f"\nFormatted {formatted} files.")
+
+
+def check_format():
+    print("\n========== FORMAT CHECK ==========")
+
+    extensions = {".cpp", ".h", ".hpp"}
+
+    failed = False
+
+    for file in Path(".").rglob("*"):
+
+        if any(part in SKIP_DIRS for part in file.parts):
+            continue
+
+        if file.suffix not in extensions:
+            continue
+
+        result = subprocess.run(
+            [
+                "clang-format",
+                "--dry-run",
+                "--Werror",
+                str(file)
+            ]
+        )
+
+        if result.returncode != 0:
+            failed = True
+
+    if failed:
+        print("\n❌ Formatting check failed.")
+        sys.exit(1)
+
+    print("\n✅ Formatting check passed.")
+
 
 
 def main():
@@ -74,6 +130,12 @@ def main():
         help="Format source code",
     )
 
+    parser.add_argument(
+        "--check-format",
+        action="store_true",
+        help="Check formatting without modifying files",
+    )
+
     args = parser.parse_args()
 
     print("==============================")
@@ -96,6 +158,9 @@ def main():
 
     elif args.format:
         format()
+
+    elif args.check_format:
+        check_format()
 
     else:
         parser.print_help()
