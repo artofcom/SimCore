@@ -69,3 +69,5 @@ add_custom_command(TARGET console_demo POST_BUILD
 enable_testing()
 
 add_subdirectory(tests)
+
+add_subdirectory(apps/robot_demo)
