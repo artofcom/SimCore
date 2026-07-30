@@ -1,4 +1,4 @@
-#include "../include/Simulation.h"
+#include "../include/simcore/Simulation.h"
 #include <gtest/gtest.h>
 
 TEST(MathTest, Add)
