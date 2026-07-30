@@ -13,9 +13,5 @@ int main()
 
     const auto& pose = robot.GetPose();
 
-    std::cout
-        << "x = " << pose.x
-        << ", y = " << pose.y
-        << ", theta = " << pose.theta
-        << '\n';
+    std::cout << "x = " << pose.x << ", y = " << pose.y << ", theta = " << pose.theta << '\n';
 }

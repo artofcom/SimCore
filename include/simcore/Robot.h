@@ -4,17 +4,17 @@
 
 namespace simcore
 {
-    class Robot
-    {
-    public:
-        Robot();
+class Robot
+{
+  public:
+    Robot();
 
-        void MoveForward(double distance);
-        void Turn(double radians);
+    void MoveForward(double distance);
+    void Turn(double radians);
 
-        const Pose2D& GetPose() const;
+    const Pose2D& GetPose() const;
 
-    private:
-        Pose2D pose_;
-    };
-}
+  private:
+    Pose2D pose_;
+};
+} // namespace simcore
