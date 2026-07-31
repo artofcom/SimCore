@@ -7,6 +7,7 @@ namespace simcore
 {
 class Robot;
 class Obstacle;
+class Goal;
 
 class World
 {
@@ -25,9 +26,14 @@ class World
 
     bool CheckCollision(const std::shared_ptr<Robot>& robot) const;
 
+    // Goal.
+    void SetGoal(std::shared_ptr<Goal> goal);
+    std::shared_ptr<Goal> GetGoal() const;
+
   private:
     std::vector<std::shared_ptr<Robot>> robots_;
     std::vector<std::shared_ptr<Obstacle>> obstacles_;
+    std::shared_ptr<Goal> goal_;
 
     void UpdateRobot(const std::shared_ptr<Robot>& robot, double dt);
 };

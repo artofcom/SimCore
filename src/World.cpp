@@ -1,4 +1,5 @@
 #include "simcore/World.h"
+#include "simcore/Goal.h"
 #include "simcore/Obstacle.h"
 #include "simcore/Robot.h"
 #include <cmath>
@@ -63,7 +64,14 @@ std::shared_ptr<Obstacle> World::GetObstacle(size_t index) const
 
     return nullptr;
 }
-
+void World::SetGoal(std::shared_ptr<Goal> goal)
+{
+    goal_ = goal;
+}
+std::shared_ptr<Goal> World::GetGoal() const
+{
+    return goal_;
+}
 bool World::CheckCollision(const std::shared_ptr<Robot>& robot) const
 {
     const Pose2D robotPose = robot->GetPose();
