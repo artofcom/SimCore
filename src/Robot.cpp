@@ -3,7 +3,7 @@
 
 namespace simcore
 {
-Robot::Robot() : velocity_(0.0f) {}
+Robot::Robot() : linearVelocity_(0.0f), angularVelocity_(0.0f) {}
 
 void Robot::MoveForward(double distance)
 {
@@ -23,15 +23,22 @@ Pose2D Robot::GetPose() const
 
 void Robot::Update(double dt)
 {
-    pose_.x += velocity_ * dt;
+    pose_.theta += angularVelocity_ * dt;
+
+    pose_.x += std::cos(pose_.theta) * linearVelocity_ * dt;
+    pose_.y += std::sin(pose_.theta) * linearVelocity_ * dt;
 }
 void Robot::SetLinearVelocity(float velocity)
 {
-    velocity_ = velocity;
+    linearVelocity_ = velocity;
+}
+void Robot::SetAngularVelocity(float angularVelocity)
+{
+    angularVelocity_ = angularVelocity;
 }
 void Robot::Stop()
 {
-    velocity_ = 0.0f;
+    linearVelocity_ = 0.0f;
 }
 
 } // namespace simcore

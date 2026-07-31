@@ -14,11 +14,13 @@ class Robot
     void Update(double dt);
     void SetLinearVelocity(float velocity);
     void Stop();
+    void SetAngularVelocity(float angularVelocity);
 
     Pose2D GetPose() const;
 
   private:
     Pose2D pose_;
-    float velocity_;
+    float linearVelocity_;
+    float angularVelocity_;
 };
 } // namespace simcore

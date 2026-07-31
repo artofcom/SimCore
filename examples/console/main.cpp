@@ -21,7 +21,7 @@ int main()
 
         auto pose = robot->GetPose();
 
-        spdlog::info("Robot Position : ({}, {})", pose.x, pose.y);
+        spdlog::info("x:{:.2f} y:{:.2f} theta:{:.2f}", pose.x, pose.y, pose.theta);
     }
 
     simulation.Shutdown();

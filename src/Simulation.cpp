@@ -20,6 +20,8 @@ void Simulation::Initialize()
 
     auto robot = std::make_shared<Robot>();
     robot->SetLinearVelocity(1.0f);
+    robot->SetAngularVelocity(0.5f);
+
     world_.AddRobot(robot);
 }
 
