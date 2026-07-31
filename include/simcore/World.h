@@ -1,5 +1,6 @@
 #pragma once
 
+#include "simcore/GoalController.h"
 #include <memory>
 #include <vector>
 
@@ -34,6 +35,7 @@ class World
     std::vector<std::shared_ptr<Robot>> robots_;
     std::vector<std::shared_ptr<Obstacle>> obstacles_;
     std::shared_ptr<Goal> goal_;
+    GoalController goalController_;
 
     void UpdateRobot(const std::shared_ptr<Robot>& robot, double dt);
 };

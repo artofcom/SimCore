@@ -20,7 +20,12 @@ Pose2D Robot::GetPose() const
 {
     return pose_;
 }
-
+void Robot::SetPose(float x, float y, float theta)
+{
+    pose_.x = x;
+    pose_.y = y;
+    pose_.theta = theta;
+}
 void Robot::Update(double dt)
 {
     pose_.theta += angularVelocity_ * dt;

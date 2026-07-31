@@ -40,6 +40,7 @@ add_library(simcore
     src/World.cpp
     src/Obstacle.cpp
     src/Goal.cpp
+    src/GoalController.cpp
 )
 
 target_include_directories(simcore

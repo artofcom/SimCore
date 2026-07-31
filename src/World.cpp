@@ -12,7 +12,8 @@ void World::Update(double dt)
 {
     for (auto& robot : robots_)
     {
-        UpdateRobot(robot, dt);
+        goalController_.Update(robot, goal_, dt);
+        robot->Update(dt);
     }
 }
 
