@@ -3,10 +3,6 @@
 
 namespace simcore
 {
-void World::AddRobot(std::shared_ptr<Robot> robot)
-{
-    robots_.push_back(robot);
-}
 
 void World::Update(double dt)
 {
@@ -14,6 +10,11 @@ void World::Update(double dt)
     {
         robot->Update(dt);
     }
+}
+
+void World::AddRobot(std::shared_ptr<Robot> robot)
+{
+    robots_.push_back(robot);
 }
 
 size_t World::GetRobotCount() const
@@ -27,7 +28,23 @@ std::shared_ptr<Robot> World::GetRobot(size_t index) const
     {
         return nullptr;
     }
-
     return robots_[index];
 }
+
+void World::AddObstacle(std::shared_ptr<Obstacle> obstacle)
+{
+    obstacles_.push_back(obstacle);
+}
+size_t World::GetObstacleCount() const
+{
+    return obstacles_.size();
+}
+std::shared_ptr<Obstacle> World::GetObstacle(size_t index) const
+{
+    if (index < obstacles_.size())
+        return obstacles_[index];
+
+    return nullptr;
+}
+
 } // namespace simcore

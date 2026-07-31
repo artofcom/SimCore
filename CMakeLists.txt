@@ -38,6 +38,7 @@ add_library(simcore
     src/config.cpp
     src/Robot.cpp
     src/World.cpp
+    src/Obstacle.cpp
 )
 
 target_include_directories(simcore
