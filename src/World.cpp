@@ -1,5 +1,8 @@
 #include "simcore/World.h"
+#include "simcore/Obstacle.h"
 #include "simcore/Robot.h"
+#include <cmath>
+#include <spdlog/spdlog.h>
 
 namespace simcore
 {
@@ -8,8 +11,22 @@ void World::Update(double dt)
 {
     for (auto& robot : robots_)
     {
-        robot->Update(dt);
+        UpdateRobot(robot, dt);
     }
+}
+
+void World::UpdateRobot(const std::shared_ptr<Robot>& robot, double dt)
+{
+    if (CheckCollision(robot))
+    {
+        robot->Stop();
+
+        spdlog::warn("Robot collided with obstacle.");
+
+        return;
+    }
+
+    robot->Update(dt);
 }
 
 void World::AddRobot(std::shared_ptr<Robot> robot)
@@ -47,4 +64,29 @@ std::shared_ptr<Obstacle> World::GetObstacle(size_t index) const
     return nullptr;
 }
 
+bool World::CheckCollision(const std::shared_ptr<Robot>& robot) const
+{
+    const Pose2D robotPose = robot->GetPose();
+    const float robotRadius = robot->GetRadius();
+
+    for (const auto& obstacle : obstacles_)
+    {
+        const Pose2D obstaclePose = obstacle->GetPose();
+        const float obstacleRadius = obstacle->GetRadius();
+
+        const float dx = robotPose.x - obstaclePose.x;
+        const float dy = robotPose.y - obstaclePose.y;
+
+        const float distanceSquared = dx * dx + dy * dy;
+
+        const float radiusSum = robotRadius + obstacleRadius;
+
+        if (distanceSquared < radiusSum * radiusSum)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
 } // namespace simcore

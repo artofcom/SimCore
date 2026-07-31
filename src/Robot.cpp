@@ -3,7 +3,7 @@
 
 namespace simcore
 {
-Robot::Robot() : linearVelocity_(0.0f), angularVelocity_(0.0f) {}
+Robot::Robot() : linearVelocity_(0.0f), angularVelocity_(0.0f), radius_(0.5f) {}
 
 void Robot::MoveForward(double distance)
 {
@@ -41,4 +41,12 @@ void Robot::Stop()
     linearVelocity_ = 0.0f;
 }
 
+void Robot::SetRadius(float radius)
+{
+    radius_ = radius;
+}
+float Robot::GetRadius() const
+{
+    return radius_;
+}
 } // namespace simcore

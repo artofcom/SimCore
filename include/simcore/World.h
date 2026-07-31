@@ -23,9 +23,13 @@ class World
     size_t GetObstacleCount() const;
     std::shared_ptr<Obstacle> GetObstacle(size_t index) const;
 
+    bool CheckCollision(const std::shared_ptr<Robot>& robot) const;
+
   private:
     std::vector<std::shared_ptr<Robot>> robots_;
     std::vector<std::shared_ptr<Obstacle>> obstacles_;
+
+    void UpdateRobot(const std::shared_ptr<Robot>& robot, double dt);
 };
 
 } // namespace simcore

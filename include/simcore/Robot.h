@@ -18,8 +18,12 @@ class Robot
 
     Pose2D GetPose() const;
 
+    void SetRadius(float radius);
+    float GetRadius() const;
+
   private:
     Pose2D pose_;
+    float radius_;
     float linearVelocity_;
     float angularVelocity_;
 };
