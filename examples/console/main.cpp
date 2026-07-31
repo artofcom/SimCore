@@ -1,20 +1,30 @@
 #include <chrono>
 #include <thread>
 
+#include "simcore/Robot.h"
 #include "simcore/Simulation.h"
+#include <spdlog/spdlog.h>
 
 int main()
 {
-    Simulation sim;
+    simcore::Simulation simulation;
 
-    sim.Initialize();
+    simulation.Initialize();
 
-    for (int i = 0; i < 5; i++)
+    auto& world = simulation.GetWorld();
+
+    for (int i = 0; i < 10; ++i)
     {
-        sim.Update(1.0f);
+        simulation.Update(1.0f);
+
+        auto robot = world.GetRobot(0);
+
+        auto pose = robot->GetPose();
+
+        spdlog::info("Robot Position : ({}, {})", pose.x, pose.y);
     }
 
-    sim.Shutdown();
+    simulation.Shutdown();
 
     return 0;
 }

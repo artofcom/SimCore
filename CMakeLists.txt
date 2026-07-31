@@ -37,6 +37,7 @@ add_library(simcore
     src/Simulation.cpp
     src/config.cpp
     src/Robot.cpp
+    src/World.cpp
 )
 
 target_include_directories(simcore

@@ -11,10 +11,14 @@ class Robot
 
     void MoveForward(double distance);
     void Turn(double radians);
+    void Update(double dt);
+    void SetLinearVelocity(float velocity);
+    void Stop();
 
-    const Pose2D& GetPose() const;
+    Pose2D GetPose() const;
 
   private:
     Pose2D pose_;
+    float velocity_;
 };
 } // namespace simcore

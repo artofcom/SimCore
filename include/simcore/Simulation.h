@@ -1,10 +1,15 @@
-#ifndef SIMULATION_H
-#define SIMULATION_H
+#pragma once
 
+#include "World.h"
+
+namespace simcore
+{
 class Simulation
 {
   private:
     int m_tick;
+
+    World world_;
 
   public:
     Simulation();
@@ -15,6 +20,7 @@ class Simulation
     void Update(float dt);
 
     void Shutdown();
-};
 
-#endif // SIMULATION_H
+    World& GetWorld();
+};
+} // namespace simcore

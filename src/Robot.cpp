@@ -3,7 +3,7 @@
 
 namespace simcore
 {
-Robot::Robot() = default;
+Robot::Robot() : velocity_(0.0f) {}
 
 void Robot::MoveForward(double distance)
 {
@@ -16,8 +16,22 @@ void Robot::Turn(double radians)
     pose_.theta += radians;
 }
 
-const Pose2D& Robot::GetPose() const
+Pose2D Robot::GetPose() const
 {
     return pose_;
 }
+
+void Robot::Update(double dt)
+{
+    pose_.x += velocity_ * dt;
+}
+void Robot::SetLinearVelocity(float velocity)
+{
+    velocity_ = velocity;
+}
+void Robot::Stop()
+{
+    velocity_ = 0.0f;
+}
+
 } // namespace simcore
