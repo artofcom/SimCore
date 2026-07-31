@@ -5,31 +5,45 @@
 
 # SimCore
 
-> A modern C++20 simulation framework demonstrating production-style engineering practices.
+> A modern C++20 robotics simulation framework built from scratch.
 
-SimCore is a personal learning project focused on building a reusable C++ development workflow for simulation, robotics, and game engine projects.
+SimCore is a personal learning project focused on building a modular robotics simulation framework while practicing production-quality C++ software engineering.
 
-Instead of only implementing simulation logic, this project emphasizes modern software engineering practices including CI/CD, Docker, testing, logging, formatting, and configuration management.
+The project is developed incrementally to better understand how robotics simulators are architected internally, covering robot kinematics, world modeling, collision detection, navigation, and autonomous control.
+
+Rather than relying on an existing simulator, every subsystem is implemented from the ground up.
 
 ---
 
-## Features
+# Features
+
+## Engineering
 
 - ✅ Modern C++20
 - ✅ CMake Build System
-- ✅ GoogleTest Unit Testing
+- ✅ GoogleTest
 - ✅ GitHub Actions CI/CD
-- ✅ Docker Build & Test
+- ✅ Docker
 - ✅ Python Build Tool
 - ✅ clang-format
-- ✅ spdlog Logging
-- ✅ JSON Configuration System
+- ✅ spdlog
+- ✅ JSON Configuration
 - ✅ Automatic Resource Pipeline
 - ✅ GitHub Releases
 
+## Robotics Simulation
+
+- ✅ 2D World
+- ✅ Pose2D
+- ✅ Differential Drive Kinematics
+- ✅ Robot
+- ✅ Goal
+- ✅ Obstacle
+- ✅ Circle Collision Detection
+
 ---
 
-## Tech Stack
+# Tech Stack
 
 | Category | Technology |
 |-----------|------------|
@@ -45,12 +59,49 @@ Instead of only implementing simulation logic, this project emphasizes modern so
 
 ---
 
-## Project Structure
+# Architecture
 
-```text
+```
+Simulation
+      │
+      ▼
+World
+ ├── Robot
+ ├── Goal
+ └── Obstacle
+```
+
+Current simulation flow
+
+```
+Simulation
+      │
+      ▼
+World::Update()
+      │
+      ▼
+Robot::Update()
+      │
+      ▼
+Pose2D
+```
+
+---
+
+# Project Structure
+
+```
 SimCore
 │
 ├── include/
+│   └── simcore/
+│       ├── Goal.h
+│       ├── Obstacle.h
+│       ├── Pose2D.h
+│       ├── Robot.h
+│       ├── Simulation.h
+│       └── World.h
+│
 ├── src/
 ├── tests/
 ├── examples/
@@ -64,16 +115,15 @@ SimCore
 
 ---
 
-## Build
+# Build
 
 ```bash
-cmake -S . -B build
-cmake --build build
+python3 build.py --build
 ```
 
 ---
 
-## Run
+# Run
 
 ```bash
 ./build/console_demo
@@ -81,35 +131,31 @@ cmake --build build
 
 ---
 
-## Python Build Tool
-
-Build
+# Testing
 
 ```bash
-python build.py --build
-```
-
-Run Tests
-
-```bash
-python build.py --test
-```
-
-Format
-
-```bash
-python build.py --format
-```
-
-Format Check
-
-```bash
-python build.py --check-format
+python3 build.py --test
 ```
 
 ---
 
-## Docker
+# Formatting
+
+Format source code
+
+```bash
+python3 build.py --format
+```
+
+Verify formatting
+
+```bash
+python3 build.py --check-format
+```
+
+---
+
+# Docker
 
 Build
 
@@ -125,63 +171,104 @@ docker run --rm simcore
 
 ---
 
-## Continuous Integration
+# Continuous Integration
 
-Every push automatically runs:
+Every push automatically performs:
 
-- Code formatting check
-- Docker build
-- Unit tests
+- Formatting Check
+- CMake Build
+- Docker Build
+- Unit Tests
 
 ---
 
-## Engineering Workflow
+# Development Workflow
 
-```text
+```
 Git Push
     │
     ▼
 GitHub Actions
     │
- ┌──┴────────────┐
- │               │
-Quality      Docker
- │               │
-Format      Build
- │               │
-PASS        GoogleTest
+ ┌──┴───────────────┐
+ │                  │
+Formatting      Build & Test
+ │                  │
+PASS          GoogleTest
 ```
 
 ---
 
-## Roadmap
+# Robotics Roadmap
 
-### Completed
+## Foundation
 
-- [x] Modern C++20
-- [x] CMake
-- [x] GoogleTest
-- [x] GitHub Actions
-- [x] Docker
-- [x] Python Build Tool
-- [x] clang-format
-- [x] spdlog
-- [x] JSON Configuration
-- [x] Resource Pipeline
+- [x] Pose2D
+- [x] Robot
+- [x] World
+- [x] Differential Drive Kinematics
+- [x] Goal
+- [x] Obstacle
+- [x] Collision Detection
 
-### Planned
+## Navigation
 
-- [ ] clang-tidy
-- [ ] Code Coverage
-- [ ] Benchmark
-- [ ] ROS2 Integration
+- [ ] Goal Controller
+- [ ] Occupancy Grid
+- [ ] A* Path Planning
+- [ ] Waypoint Following
+
+## Robotics
+
+- [ ] Sensor Framework
+- [ ] LiDAR Simulation
+- [ ] Differential Drive Controller
+- [ ] ROS2 Bridge
+
+## Advanced
+
+- [ ] Multi Robot Simulation
 - [ ] Fleet Manager
-- [ ] Unity Sample Project
+- [ ] Unity Visualization
 
 ---
 
-## Purpose
+# Long-term Goals
 
-This repository serves as a reusable engineering template for future C++ projects, including robotics, simulation, and game engine development.
+- Build a reusable robotics simulation framework.
+- Learn robotics algorithms by implementing them from scratch.
+- Practice production-quality C++ software engineering.
+- Explore ROS2 integration.
+- Develop a foundation for digital twin and autonomous robotics research.
 
-The long-term goal is to establish a consistent development workflow that can be shared across native C++ libraries and Unity-based applications.
+---
+
+# Status
+
+🚧 This project is currently under active development.
+
+The architecture and APIs are expected to evolve as new robotics concepts are implemented.
+
+
+## Current Progress
+
+✅ Milestone 1 - Pose2D
+
+✅ Milestone 2 - Robot Kinematics
+
+✅ Milestone 3 - World & Collision
+
+✅ Milestone 4 - Goal Management
+
+🚧 Milestone 5 - Goal Controller (In Progress)
+
+⬜ Milestone 6 - Occupancy Grid
+
+⬜ Milestone 7 - A* Path Planning
+
+⬜ Milestone 8 - ROS2 Integration
+
+
+# License
+
+This project is intended for educational and personal learning purposes.
