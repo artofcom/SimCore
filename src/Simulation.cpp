@@ -4,6 +4,7 @@
 #include "simcore/World.h"
 #include "simcore/Goal.h"
 #include <spdlog/spdlog.h>
+#include "simcore/Obstacle.h"
 
 namespace simcore
 {
@@ -15,7 +16,10 @@ void Simulation::Initialize()
 {
     spdlog::info("Simulation initialized.");
 
-    Config::Instance().Load("config/config.json");
+   // Config::Instance().Load("config/config.json");
+
+   Config::Instance().Load(
+        "/home/artofcom/workspace/SimCore/config/config.json");
 
     spdlog::info("Robot speed: {}", Config::Instance().robot.speed);
 
@@ -25,6 +29,17 @@ void Simulation::Initialize()
     // robot->SetPose(0.0f, 0.0f, 0.0f);
 
     world_.AddRobot(robot);
+
+    // adding test obstacles.
+    auto obstacle = std::make_shared<Obstacle>();
+    obstacle->SetPosition(3.0f, 1.5f);
+    obstacle->SetRadius(0.5f);
+    world_.AddObstacle(obstacle);
+
+    auto obstacle2 = std::make_shared<Obstacle>();
+    obstacle2->SetPosition(-2.0f, -1.0f);
+    obstacle2->SetRadius(0.7f);
+    world_.AddObstacle(obstacle2);
 }
 
 void Simulation::Update(float dt)
@@ -76,6 +91,16 @@ const Pose2D& Simulation::GetGoalPose() const
 bool Simulation::HasGoal() const
 {
     return world_.GetGoal() != nullptr;
+}
+
+size_t Simulation::GetObstacleCount() const
+{
+    return world_.GetObstacleCount();
+}
+
+std::shared_ptr<Obstacle> Simulation::GetObstacle(size_t index) const
+{
+    return world_.GetObstacle(index);
 }
 
 } // namespace simcore

@@ -30,5 +30,9 @@ class Simulation
     const Pose2D& GetGoalPose() const;
 
     bool HasGoal() const;
+
+    size_t GetObstacleCount() const;
+
+    std::shared_ptr<Obstacle> GetObstacle(size_t index) const;
 };
 } // namespace simcore

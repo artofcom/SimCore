@@ -11,7 +11,7 @@ class Obstacle
 
     void SetPosition(float x, float y);
 
-    Pose2D GetPose() const;
+    const Pose2D& GetPose() const;
 
     void SetRadius(float radius);
 

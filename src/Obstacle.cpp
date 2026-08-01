@@ -11,7 +11,7 @@ void Obstacle::SetPosition(float x, float y)
     pose_.y = y;
 }
 
-Pose2D Obstacle::GetPose() const
+const Pose2D& Obstacle::GetPose() const
 {
     return pose_;
 }

@@ -4,7 +4,7 @@
 namespace simcore
 {
 Robot::Robot() : 
-    radius_(0.5f),
+    radius_(0.3f),
     linearVelocity_(0.0f), 
     angularVelocity_(0.0f)
  {}

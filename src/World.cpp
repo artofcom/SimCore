@@ -12,8 +12,21 @@ void World::Update(double dt)
 {
     for (auto& robot : robots_)
     {
+        auto oldPose = robot->GetPose();
+
         goalController_.Update(robot, goal_, dt);
+
         robot->Update(dt);
+
+        if (CheckCollision(robot))
+        {
+            const auto& newPose = robot->GetPose();
+
+            robot->SetPose(
+                oldPose.x,
+                oldPose.y,
+                newPose.theta);
+        }
     }
 }
 
@@ -79,27 +92,25 @@ GoalController& World::GetGoalController()
 }
 bool World::CheckCollision(const std::shared_ptr<Robot>& robot) const
 {
-    const Pose2D robotPose = robot->GetPose();
-    const float robotRadius = robot->GetRadius();
+    const auto& robotPose = robot->GetPose();
 
     for (const auto& obstacle : obstacles_)
     {
-        const Pose2D obstaclePose = obstacle->GetPose();
-        const float obstacleRadius = obstacle->GetRadius();
+        const auto& obstaclePose = obstacle->GetPose();
 
-        const float dx = robotPose.x - obstaclePose.x;
-        const float dy = robotPose.y - obstaclePose.y;
+        float dx = robotPose.x - obstaclePose.x;
+        float dy = robotPose.y - obstaclePose.y;
 
-        const float distanceSquared = dx * dx + dy * dy;
+        float distanceSquared = dx * dx + dy * dy;
 
-        const float radiusSum = robotRadius + obstacleRadius;
+        float collisionDistance =
+            robot->GetRadius() + obstacle->GetRadius();
 
-        if (distanceSquared < radiusSum * radiusSum)
+        if (distanceSquared < collisionDistance * collisionDistance)
         {
             return true;
         }
     }
-
     return false;
 }
 } // namespace simcore
