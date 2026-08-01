@@ -28,5 +28,7 @@ class Simulation
 
     void SetGoal(float x, float y);
     const Pose2D& GetGoalPose() const;
+
+    bool HasGoal() const;
 };
 } // namespace simcore

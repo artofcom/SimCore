@@ -72,4 +72,10 @@ const Pose2D& Simulation::GetGoalPose() const
 {
     return world_.GetGoal()->GetPose();
 }
+
+bool Simulation::HasGoal() const
+{
+    return world_.GetGoal() != nullptr;
+}
+
 } // namespace simcore
