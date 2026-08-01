@@ -73,6 +73,10 @@ std::shared_ptr<Goal> World::GetGoal() const
 {
     return goal_;
 }
+GoalController& World::GetGoalController()
+{
+    return goalController_;
+}
 bool World::CheckCollision(const std::shared_ptr<Robot>& robot) const
 {
     const Pose2D robotPose = robot->GetPose();

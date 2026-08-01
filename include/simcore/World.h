@@ -30,6 +30,7 @@ class World
     // Goal.
     void SetGoal(std::shared_ptr<Goal> goal);
     std::shared_ptr<Goal> GetGoal() const;
+    GoalController& GetGoalController();
 
   private:
     std::vector<std::shared_ptr<Robot>> robots_;
