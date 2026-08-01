@@ -2,6 +2,7 @@
 #include "config.h"
 #include "simcore/Robot.h"
 #include "simcore/World.h"
+#include "simcore/Goal.h"
 #include <spdlog/spdlog.h>
 
 namespace simcore
@@ -49,5 +50,26 @@ void Simulation::Shutdown()
 World& Simulation::GetWorld()
 {
     return world_;
+}
+
+const Pose2D& Simulation::GetRobotPose(size_t index) const
+{
+    if (index >= world_.GetRobotCount())
+        throw std::out_of_range("Robot index out of range.");
+    
+    return world_.GetRobot(index)->GetPose();
+}
+
+void Simulation::SetGoal(float x, float y)
+{
+    auto goal = std::make_shared<Goal>();
+
+    goal->SetPosition(x, y);
+
+    world_.SetGoal(goal);
+}
+const Pose2D& Simulation::GetGoalPose() const
+{
+    return world_.GetGoal()->GetPose();
 }
 } // namespace simcore

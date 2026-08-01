@@ -11,7 +11,7 @@ class Goal
 
     void SetPosition(float x, float y);
 
-    Pose2D GetPose() const;
+    const Pose2D& GetPose() const;
 
   private:
     Pose2D pose_;

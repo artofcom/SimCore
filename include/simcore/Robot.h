@@ -17,7 +17,7 @@ class Robot
     void SetAngularVelocity(float angularVelocity);
 
     void SetPose(float x, float y, float theta);
-    Pose2D GetPose() const;
+    const Pose2D& GetPose() const;
 
     void SetRadius(float radius);
     float GetRadius() const;

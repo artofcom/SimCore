@@ -19,8 +19,7 @@ void Robot::Turn(double radians)
 {
     pose_.theta += radians;
 }
-
-Pose2D Robot::GetPose() const
+const Pose2D& Robot::GetPose() const
 {
     return pose_;
 }

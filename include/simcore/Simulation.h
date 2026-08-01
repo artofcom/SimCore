@@ -1,6 +1,7 @@
 #pragma once
 
 #include "World.h"
+#include "Pose2D.h"
 
 namespace simcore
 {
@@ -22,5 +23,10 @@ class Simulation
     void Shutdown();
 
     World& GetWorld();
+
+    const Pose2D& GetRobotPose(size_t index = 0) const;
+
+    void SetGoal(float x, float y);
+    const Pose2D& GetGoalPose() const;
 };
 } // namespace simcore

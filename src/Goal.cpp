@@ -10,7 +10,7 @@ void Goal::SetPosition(float x, float y)
     pose_.y = y;
 }
 
-Pose2D Goal::GetPose() const
+const Pose2D& Goal::GetPose() const
 {
     return pose_;
 }
