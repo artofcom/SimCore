@@ -10,17 +10,19 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # ============================================================
-# FetchContent
+# Build Options
 # ============================================================
-include(FetchContent)
 
-# spdlog
-FetchContent_Declare(
-    spdlog
-    GIT_REPOSITORY https://github.com/gabime/spdlog.git
-    GIT_TAG v1.15.3
-)
-FetchContent_MakeAvailable(spdlog)
+option(SIMCORE_BUILD_EXAMPLES "Build examples" ON)
+option(SIMCORE_BUILD_TESTS "Build tests" ON)
+
+# ============================================================
+# Dependencies
+# ============================================================
+
+find_package(spdlog REQUIRED)
+
+include(FetchContent)
 
 # nlohmann_json
 FetchContent_Declare(
@@ -28,11 +30,13 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/nlohmann/json.git
     GIT_TAG v3.12.0
 )
+
 FetchContent_MakeAvailable(json)
 
 # ============================================================
 # SimCore Library
 # ============================================================
+
 add_library(simcore
     src/Simulation.cpp
     src/config.cpp
@@ -50,36 +54,43 @@ target_include_directories(simcore
 
 target_link_libraries(simcore
     PUBLIC
-        spdlog::spdlog
+        spdlog::spdlog_header_only
         nlohmann_json::nlohmann_json
 )
 
 # ============================================================
 # Console Demo
 # ============================================================
-add_executable(console_demo
-    examples/console/main.cpp
-)
 
-target_link_libraries(console_demo
-    PRIVATE
-        simcore
-)
+if(SIMCORE_BUILD_EXAMPLES)
 
-# Copy config folder next to executable
-add_custom_command(TARGET console_demo POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/config
-        $<TARGET_FILE_DIR:console_demo>/config
-)
+    add_executable(console_demo
+        examples/console/main.cpp
+    )
 
-# ============================================================
-# Robot Demo
-# ============================================================
-add_subdirectory(apps/robot_demo)
+    target_link_libraries(console_demo
+        PRIVATE
+            simcore
+    )
+
+    add_custom_command(TARGET console_demo POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_CURRENT_SOURCE_DIR}/config
+            $<TARGET_FILE_DIR:console_demo>/config
+    )
+
+    add_subdirectory(apps/robot_demo)
+
+endif()
 
 # ============================================================
 # Tests
 # ============================================================
-enable_testing()
-add_subdirectory(tests)
+
+if(SIMCORE_BUILD_TESTS)
+
+    enable_testing()
+
+    add_subdirectory(tests)
+
+endif()
