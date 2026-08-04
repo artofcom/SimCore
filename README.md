@@ -5,268 +5,193 @@
 
 # SimCore
 
-> A modern C++20 robotics simulation framework built from scratch.
+A lightweight robotics simulation core for AGV and mobile robot development.
 
-SimCore is a personal learning project focused on building a modular robotics simulation framework while practicing production-quality C++ software engineering.
+## Overview
 
-The project is developed incrementally to better understand how robotics simulators are architected internally, covering robot kinematics, world modeling, collision detection, navigation, and autonomous control.
+SimCore is a C++ robotics simulation engine that communicates through ROS2, allowing visualization and integration with multiple robotics simulators and applications.
 
-Rather than relying on an existing simulator, every subsystem is implemented from the ground up.
+Current visualization target:
 
----
+- NVIDIA Isaac Sim 6.0
 
-# Features
+Future targets:
 
-## Engineering
-
-- ✅ Modern C++20
-- ✅ CMake Build System
-- ✅ GoogleTest
-- ✅ GitHub Actions CI/CD
-- ✅ Docker
-- ✅ Python Build Tool
-- ✅ clang-format
-- ✅ spdlog
-- ✅ JSON Configuration
-- ✅ Automatic Resource Pipeline
-- ✅ GitHub Releases
-
-## Robotics Simulation
-
-- ✅ 2D World
-- ✅ Pose2D
-- ✅ Differential Drive Kinematics
-- ✅ Robot
-- ✅ Goal
-- ✅ Obstacle
-- ✅ Circle Collision Detection
-
----
-
-# Tech Stack
-
-| Category | Technology |
-|-----------|------------|
-| Language | C++20 |
-| Build | CMake |
-| Testing | GoogleTest |
-| CI/CD | GitHub Actions |
-| Container | Docker |
-| Formatting | clang-format |
-| Logging | spdlog |
-| Configuration | nlohmann/json |
-| Automation | Python |
+- RViz
+- Custom Fleet Manager
+- Physical AGV
 
 ---
 
 # Architecture
 
 ```
-Simulation
-      │
-      ▼
-World
- ├── Robot
- ├── Goal
- └── Obstacle
-```
-
-Current simulation flow
-
-```
-Simulation
-      │
-      ▼
-World::Update()
-      │
-      ▼
-Robot::Update()
-      │
-      ▼
-Pose2D
++---------------------+
+|     SimCore         |
+|  (C++ Simulation)   |
++----------+----------+
+           |
+           | Internal API
+           |
++----------v----------+
+|   simcore_bridge    |
+|    ROS2 Bridge      |
++----------+----------+
+           |
+           | PoseStamped
+           |
++----------v----------+
+|    NVIDIA Isaac     |
+|      Python         |
++----------+----------+
+           |
+           |
+      USD Prim Update
+           |
+           |
+        Robot Model
 ```
 
 ---
 
-# Project Structure
+# Technology Stack
+
+## Core
+
+- C++20
+- CMake
+
+## Communication
+
+- ROS2 Jazzy
+- geometry_msgs
+- tf2
+
+## Visualization
+
+- NVIDIA Isaac Sim 6.0
+- Python
+- USD
+- OmniKit
+
+---
+
+# Current Features
+
+- AGV simulation core
+- Robot pose publisher
+- Goal publisher
+- TF publisher
+- Marker publisher
+- ROS2 Bridge
+
+---
+
+# Milestones
+
+## Milestone 1 ✅
+
+Real-time visualization in NVIDIA Isaac Sim.
+
+Completed features:
+
+- SimCore publishes robot pose
+- ROS2 Bridge transfers PoseStamped
+- Isaac Sim subscribes to ROS2 topic
+- Python callback updates USD transform
+- Cube visualization follows SimCore robot in real time
+
+Result:
 
 ```
 SimCore
-│
-├── include/
-│   └── simcore/
-│       ├── Goal.h
-│       ├── Obstacle.h
-│       ├── Pose2D.h
-│       ├── Robot.h
-│       ├── Simulation.h
-│       └── World.h
-│
-├── src/
-├── tests/
-├── examples/
-├── config/
-├── .github/
-│   └── workflows/
-├── build.py
-├── Dockerfile
-└── CMakeLists.txt
-```
-
----
-
-# Build
-
-```bash
-python3 build.py --build
-```
-
----
-
-# Run
-
-```bash
-./build/console_demo
-```
-
----
-
-# Testing
-
-```bash
-python3 build.py --test
-```
-
----
-
-# Formatting
-
-Format source code
-
-```bash
-python3 build.py --format
-```
-
-Verify formatting
-
-```bash
-python3 build.py --check-format
-```
-
----
-
-# Docker
-
-Build
-
-```bash
-docker build -t simcore .
-```
-
-Run
-
-```bash
-docker run --rm simcore
-```
-
----
-
-# Continuous Integration
-
-Every push automatically performs:
-
-- Formatting Check
-- CMake Build
-- Docker Build
-- Unit Tests
-
----
-
-# Development Workflow
-
-```
-Git Push
     │
-    ▼
-GitHub Actions
+ROS2
     │
- ┌──┴───────────────┐
- │                  │
-Formatting      Build & Test
- │                  │
-PASS          GoogleTest
+Isaac Sim
+    │
+Moving Cube
+```
+
+Status:
+
+**Completed**
+
+---
+
+## Milestone 2 (Next)
+
+Replace cube with a mobile robot model.
+
+Goals
+
+- Nova Carter visualization
+- Robot orientation support
+- Cleaner bridge architecture
+
+---
+
+## Milestone 3
+
+Visualization Features
+
+- Goal
+- Planned Path
+- Obstacles
+- Robot Footprint
+- Robot Trajectory
+
+---
+
+## Milestone 4
+
+Sensor Visualization
+
+- LiDAR
+- Camera
+- Depth Camera
+- Semantic Camera
+
+---
+
+# Future Roadmap
+
+- Digital Twin
+- Fleet Visualization
+- Multi-Robot Simulation
+- Isaac Lab Integration
+- Physical Robot Integration
+
+---
+
+# Repository Structure
+
+```
+simcore/
+    core/
+
+simcore_bridge/
+    ROS2 Bridge
+
+isaac_bridge/
+    Python Visualization
 ```
 
 ---
 
-# Robotics Roadmap
+# Current Status
 
-## Foundation
+✅ ROS2 communication
 
-- [x] Pose2D
-- [x] Robot
-- [x] World
-- [x] Differential Drive Kinematics
-- [x] Goal
-- [x] Obstacle
-- [x] Collision Detection
+✅ Isaac Sim integration
 
-## Navigation
+✅ Real-time robot visualization
 
-- [ ] Goal Controller
-- [ ] Occupancy Grid
-- [ ] A* Path Planning
-- [ ] Waypoint Following
+🚧 Robot model replacement
 
-## Robotics
+🚧 Multi-robot support
 
-- [ ] Sensor Framework
-- [ ] LiDAR Simulation
-- [ ] Differential Drive Controller
-- [ ] ROS2 Bridge
-
-## Advanced
-
-- [ ] Multi Robot Simulation
-- [ ] Fleet Manager
-- [ ] Unity Visualization
-
----
-
-# Long-term Goals
-
-- Build a reusable robotics simulation framework.
-- Learn robotics algorithms by implementing them from scratch.
-- Practice production-quality C++ software engineering.
-- Explore ROS2 integration.
-- Develop a foundation for digital twin and autonomous robotics research.
-
----
-
-# Status
-
-🚧 This project is currently under active development.
-
-The architecture and APIs are expected to evolve as new robotics concepts are implemented.
-
-
-## Current Progress
-
-✅ Milestone 1 - Pose2D
-
-✅ Milestone 2 - Robot Kinematics
-
-✅ Milestone 3 - World & Collision
-
-✅ Milestone 4 - Goal Management
-
-🚧 Milestone 5 - Goal Controller (In Progress)
-
-⬜ Milestone 6 - Occupancy Grid
-
-⬜ Milestone 7 - A* Path Planning
-
-⬜ Milestone 8 - ROS2 Integration
+🚧 Sensor visualization
 
 
 # License
