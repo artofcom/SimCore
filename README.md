@@ -7,6 +7,10 @@
 
 A lightweight robotics simulation core for AGV and mobile robot development.
 
+<p align="left">
+  <img src="images/receiver_stage1.jpg" width="700">
+</p>
+
 ## Overview
 
 SimCore is a C++ robotics simulation engine that communicates through ROS2, allowing visualization and integration with multiple robotics simulators and applications.
