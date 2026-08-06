@@ -1,10 +1,10 @@
 #include "simcore/Simulation.h"
 #include "config.h"
+#include "simcore/Goal.h"
+#include "simcore/Obstacle.h"
 #include "simcore/Robot.h"
 #include "simcore/World.h"
-#include "simcore/Goal.h"
 #include <spdlog/spdlog.h>
-#include "simcore/Obstacle.h"
 
 namespace simcore
 {
@@ -16,10 +16,9 @@ void Simulation::Initialize()
 {
     spdlog::info("Simulation initialized.");
 
-   // Config::Instance().Load("config/config.json");
+    // Config::Instance().Load("config/config.json");
 
-   Config::Instance().Load(
-        "/home/artofcom/workspace/SimCore/config/config.json");
+    Config::Instance().Load("/home/artofcom/workspace/SimCore/config/config.json");
 
     spdlog::info("Robot speed: {}", Config::Instance().robot.speed);
 
@@ -71,7 +70,7 @@ const Pose2D& Simulation::GetRobotPose(size_t index) const
 {
     if (index >= world_.GetRobotCount())
         throw std::out_of_range("Robot index out of range.");
-    
+
     return world_.GetRobot(index)->GetPose();
 }
 

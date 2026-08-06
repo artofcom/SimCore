@@ -22,10 +22,7 @@ void World::Update(double dt)
         {
             const auto& newPose = robot->GetPose();
 
-            robot->SetPose(
-                oldPose.x,
-                oldPose.y,
-                newPose.theta);
+            robot->SetPose(oldPose.x, oldPose.y, newPose.theta);
         }
     }
 }
@@ -103,8 +100,7 @@ bool World::CheckCollision(const std::shared_ptr<Robot>& robot) const
 
         float distanceSquared = dx * dx + dy * dy;
 
-        float collisionDistance =
-            robot->GetRadius() + obstacle->GetRadius();
+        float collisionDistance = robot->GetRadius() + obstacle->GetRadius();
 
         if (distanceSquared < collisionDistance * collisionDistance)
         {
